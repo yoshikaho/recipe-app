@@ -45,6 +45,24 @@ button {
   margin-top: 14px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
+  details {
+  background:#fff;
+  border-radius:16px;
+  margin:12px 0;
+  padding:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+summary {
+  font-size:18px;
+  font-weight:bold;
+  list-style:none;
+}
+
+summary::-webkit-details-marker {
+  display:none;
+}
+
 </style>
 
 </head>
@@ -86,18 +104,22 @@ function addRecipe(){
 }
 
 function render(){
-  const list=document.getElementById("list");
-  list.innerHTML="";
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
   recipes.forEach((r, index) => {
-  list.innerHTML += `
-    <div class="recipe">
-      <h3>${r.title}</h3>
-      材料:<br>${r.ingredients}<br><br>
-      手順:<br>${r.steps}<br><br>
-      <button onclick="deleteRecipe(${index})">削除</button>
-    </div>
-  `;
-});
+    list.innerHTML += `
+      <details class="recipe">
+        <summary class="title">${r.title}</summary>
+
+        <div class="recipeBody">
+          材料:<br>${r.ingredients}<br><br>
+          手順:<br>${r.steps}<br><br>
+          <button onclick="deleteRecipe(${index})">削除</button>
+        </div>
+      </details>
+    `;
+  });
 }
 
 render();
@@ -120,6 +142,7 @@ function toggleForm(){
 
 </body>
 </html>
+
 
 
 
