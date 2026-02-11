@@ -51,10 +51,6 @@ button {
   margin-top: 14px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
-  .recipe h3{
-  margin-bottom:6px;
-    background: #f8f2e6;
-}
   
   details {
   background:#fff;
@@ -68,6 +64,8 @@ summary {
   font-size:18px;
   font-weight:bold;
   list-style:none;
+    margin-bottom:6px;
+      background: #f8f2e6;
 }
 
 summary::-webkit-details-marker {
@@ -160,7 +158,7 @@ function render(){
   recipes.forEach((r, index) => {
     list.innerHTML += `
       <details class="recipe">
-        <h3 class="recipe h3">${r.title}</h3>
+        <summary class="title">${r.title}</summary>
 
         <div class="recipe">
           材料:<br>${r.ingredients}<br><br>
@@ -284,6 +282,7 @@ function editRecipe(index){
 
 </body>
 </html>
+
 
 
 
