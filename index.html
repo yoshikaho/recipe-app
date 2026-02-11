@@ -79,8 +79,8 @@ summary::-webkit-details-marker {
   <button onclick="addRecipe()">保存</button>
   <br>
   <br>
-  <button onclick="exportRecipes()">テキスト書き出し</button>
-  <button onclick="exportJSON()">JSONバックアップ</button>
+  <button onclick="exportRecipes()">テキスト書き出し</button><br>
+  <button onclick="exportJSON()">JSONバックアップ</button><br>
 <input type="file" id="importFile" accept=".json" onchange="importJSON(event)" hidden>
 <button onclick="document.getElementById('importFile').click()">JSON復元</button>
 
@@ -91,6 +91,8 @@ summary::-webkit-details-marker {
 
 <script>
 let recipes = JSON.parse(localStorage.getItem("recipes")||"[]");
+  let editingIndex = null;
+
 
 function save(){
   localStorage.setItem("recipes",JSON.stringify(recipes));
@@ -109,6 +111,13 @@ function addRecipe(){
   recipes.push(r);
   save();
   render();
+  if(editingIndex !== null){
+  recipes[editingIndex] = newRecipe;
+  editingIndex = null;
+}else{
+  recipes.push(newRecipe);
+}
+
 }
 
 function render(){
@@ -123,7 +132,9 @@ function render(){
         <div class="recipeBody">
           材料:<br>${r.ingredients}<br><br>
           手順:<br>${r.steps}<br><br>
+          <button onclick="editRecipe(${index})">編集</button>
           <button onclick="deleteRecipe(${index})">削除</button>
+          
         </div>
       </details>
     `;
@@ -221,12 +232,25 @@ function importJSON(event){
 
   reader.readAsText(file);
 }
+function editRecipe(index){
+
+  const r = recipes[index];
+
+  document.getElementById("title").value = r.title;
+  document.getElementById("ingredients").value = r.ingredients;
+  document.getElementById("steps").value = r.steps;
+
+  editingIndex = index;
+
+  toggleForm(true); // ← まのの今の開閉関数名に合わせてね
+}
 
   
 </script>
 
 </body>
 </html>
+
 
 
 
