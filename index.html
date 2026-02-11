@@ -37,7 +37,10 @@ button {
   border: none;
   background: #ffcfd6;
 }
-
+.bBtn{
+  background:#cff8ff;   /* 水色 */
+}
+  
 .recipe {
   background: white;
   border-radius: 14px;
@@ -93,10 +96,10 @@ summary::-webkit-details-marker {
   <br>
   <br>
                  <div class="buttonRow">
-  <button onclick="exportRecipes()">テキスト書き出し</button><br>
-  <button onclick="exportJSON()">JSONバックアップ</button><br>
+  <button  onclick="exportRecipes()">テキスト書き出し</button><br>
+  <button class="bBtn" onclick="exportJSON()">JSONバックアップ</button><br>
 <input type="file" id="importFile" accept=".json" onchange="importJSON(event)" hidden>
-<button onclick="document.getElementById('importFile').click()">JSON復元</button>
+<button class="bBtn" onclick="document.getElementById('importFile').click()">JSON復元</button>
                  </div>
 
   
@@ -152,7 +155,7 @@ function render(){
           手順:<br>${r.steps}<br><br>
                <div class="buttonRow">
           <button onclick="editRecipe(${index})">編集</button>
-          <button onclick="deleteRecipe(${index})">削除</button>
+          <button class="bBtn" onclick="deleteRecipe(${index})">削除</button>
                </div>     
         </div>
       </details>
@@ -269,6 +272,7 @@ function editRecipe(index){
 
 </body>
 </html>
+
 
 
 
