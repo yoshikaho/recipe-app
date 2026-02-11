@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>まのレシピ帳</title>
+<style>
+body{
+  font-family:sans-serif;
+  padding:20px;
+  background:#fffaf4;
+}
+h1{font-size:20px;}
+button{
+  padding:8px 12px;
+  margin:5px 0;
+}
+.card{
+  border:1px solid #ddd;
+  padding:10px;
+  margin:8px 0;
+  background:white;
+}
+input,textarea{
+  width:100%;
+  margin:4px 0;
+}
+</style>
+</head>
+<body>
+
+<h1>🍳 まのレシピ帳</h1>
+
+<button onclick="showForm()">＋ レシピ追加</button>
+
+<div id="form" style="display:none;">
+  <input id="title" placeholder="料理名">
+  <textarea id="ingredients" placeholder="材料"></textarea>
+  <textarea id="steps" placeholder="手順"></textarea>
+  <button onclick="addRecipe()">保存</button>
+</div>
+
+<div id="list"></div>
+
+<script>
+let recipes = JSON.parse(localStorage.getItem("recipes")||"[]");
+
+function save(){
+  localStorage.setItem("recipes",JSON.stringify(recipes));
+}
+
+function showForm(){
+  document.getElementById("form").style.display="block";
+}
+
+function addRecipe(){
+  const r={
+    title:document.getElementById("title").value,
+    ingredients:document.getElementById("ingredients").value,
+    steps:document.getElementById("steps").value
+  };
+  recipes.push(r);
+  save();
+  render();
+}
+
+function render(){
+  const list=document.getElementById("list");
+  list.innerHTML="";
+  recipes.forEach((r,i)=>{
+    const div=document.createElement("div");
+    div.className="card";
+    div.innerHTML=
+      "<b>"+r.title+"</b><br>"+
+      "材料:<br>"+r.ingredients+"<br><br>"+
+      "手順:<br>"+r.steps;
+    list.appendChild(div);
+  });
+}
+
+render();
+</script>
+
+</body>
+</html>
