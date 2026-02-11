@@ -165,6 +165,8 @@ function render(){
                <div class="buttonRow">
           <button onclick="editRecipe(${index})">編集</button>
           <button class="bBtn" onclick="deleteRecipe(${index})">削除</button>
+         　　　 <button class="bBtn" onclick="moveUp(${index})">↑</button>
+　　　　　　　　 <button class="bBtn" onclick="moveDown(${index})">↓</button>
                </div>     
         </div>
       </details>
@@ -275,12 +277,27 @@ function editRecipe(index){
 
   toggleForm(true); // ← まのの今の開閉関数名に合わせてね
 }
+  
+function moveUp(i){
+  if(i===0) return;
+  [recipes[i-1], recipes[i]] = [recipes[i], recipes[i-1]];
+  save();
+  render();
+}
+
+function moveDown(i){
+  if(i===recipes.length-1) return;
+  [recipes[i+1], recipes[i]] = [recipes[i], recipes[i+1]];
+  save();
+  render();
+}
 
   
 </script>
 
 </body>
 </html>
+
 
 
 
