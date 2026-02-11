@@ -19,7 +19,7 @@ h1 {
   margin-bottom: 12px;
 }
 
-input, textarea {
+input {
   width: 100%;
   font-size: 16px;
   padding: 12px;
@@ -27,8 +27,19 @@ input, textarea {
   border-radius: 10px;
   border: 1px solid #ddd;
   box-sizing: border-box;
-  resize: both;       /* 縦横どっちもOK */
 }
+textarea {
+  width: 100%;
+  font-size: 16px;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  resize: vertical;   /* 縦だけ伸ばせる */
+  min-height:120px;
+}
+
 
 button {
   padding: 14px;
@@ -141,13 +152,16 @@ function showForm(){
 }
 
 function addRecipe(){
-
-  const r={
+   const r={
     title:document.getElementById("title").value,
     ingredients:document.getElementById("ingredients").value,
     steps:document.getElementById("steps").value
   };
 
+  if(!document.getElementById("title").value.trim()){
+  alert("料理名いれて〜！");
+  return;
+}
   // ⭐ 編集中かどうかで分岐
   if(editingIndex !== null){
     recipes[editingIndex] = r;   // 上書き
@@ -168,7 +182,7 @@ function render(){
   recipes.forEach((r, index) => {
     list.innerHTML += `
       <details class="recipe">
-        <summary class="title">${r.title}</summary>
+        <summary class="title">${r.title || "（無題レシピ）"}</summary>
 
         <div class="recipe">
           材料:<br><div class="recipeText">${r.ingredients}</div><br><br>
@@ -308,6 +322,7 @@ function moveDown(i){
 
 </body>
 </html>
+
 
 
 
