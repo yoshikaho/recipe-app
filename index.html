@@ -80,6 +80,10 @@ summary::-webkit-details-marker {
   <br>
   <br>
   <button onclick="exportRecipes()">テキスト書き出し</button>
+  <button onclick="exportJSON()">JSONバックアップ</button>
+<input type="file" id="importFile" accept=".json" onchange="importJSON(event)" hidden>
+<button onclick="document.getElementById('importFile').click()">JSON復元</button>
+
   
 </div>
 
@@ -168,12 +172,62 @@ function exportRecipes(){
 
   URL.revokeObjectURL(url);
 }
+  
+  function exportJSON(){
+
+  if(recipes.length === 0){
+    alert("レシピがないよ");
+    return;
+  }
+
+  const data = JSON.stringify(recipes, null, 2);
+
+  const blob = new Blob([data], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "recipes_backup.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function importJSON(event){
+
+  const file = event.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+    try{
+      const data = JSON.parse(e.target.result);
+
+      if(!Array.isArray(data)){
+        alert("形式が違うみたい");
+        return;
+      }
+
+      recipes = data;
+      localStorage.setItem("recipes", JSON.stringify(recipes));
+      render();
+
+      alert("復元できたよ！");
+    }catch{
+      alert("読み込み失敗…");
+    }
+  };
+
+  reader.readAsText(file);
+}
 
   
 </script>
 
 </body>
 </html>
+
 
 
 
