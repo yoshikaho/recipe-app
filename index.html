@@ -160,7 +160,7 @@ function render(){
   recipes.forEach((r, index) => {
     list.innerHTML += `
       <details class="recipe">
-        <summary class="recipe h3">${r.title}</summary>
+        <h3 class="recipe h3">${r.title}</h3>
 
         <div class="recipe">
           材料:<br>${r.ingredients}<br><br>
@@ -284,6 +284,7 @@ function editRecipe(index){
 
 </body>
 </html>
+
 
 
 
