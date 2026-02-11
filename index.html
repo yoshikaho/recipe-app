@@ -92,8 +92,8 @@ summary::-webkit-details-marker {
   <button onclick="addRecipe()">保存</button>
   <br>
   <br>
-  <button onclick="exportRecipes()">テキスト書き出し</button><br>
                  <div class="buttonRow">
+  <button onclick="exportRecipes()">テキスト書き出し</button><br>
   <button onclick="exportJSON()">JSONバックアップ</button><br>
 <input type="file" id="importFile" accept=".json" onchange="importJSON(event)" hidden>
 <button onclick="document.getElementById('importFile').click()">JSON復元</button>
@@ -269,6 +269,7 @@ function editRecipe(index){
 
 </body>
 </html>
+
 
 
 
