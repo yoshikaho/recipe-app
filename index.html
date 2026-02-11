@@ -62,6 +62,16 @@ summary {
 summary::-webkit-details-marker {
   display:none;
 }
+  
+  .buttonRow{
+  display:flex;
+  gap:10px;        /* ボタンの間のすき間 */
+}
+
+.buttonRow button{
+  flex:1;          /* 横幅を自動で半分ずつ */
+}
+
 
 </style>
 
@@ -135,9 +145,10 @@ function render(){
         <div class="recipeBody">
           材料:<br>${r.ingredients}<br><br>
           手順:<br>${r.steps}<br><br>
+               <div class="buttonRow">
           <button onclick="editRecipe(${index})">編集</button>
           <button onclick="deleteRecipe(${index})">削除</button>
-          
+               </div>     
         </div>
       </details>
     `;
@@ -253,6 +264,7 @@ function editRecipe(index){
 
 </body>
 </html>
+
 
 
 
