@@ -39,6 +39,7 @@ button {
 }
 .bBtn{
   background:#d9ecf2;   /* 水色 */
+    opacity:0.7;
 }
   
 .recipe {
@@ -108,6 +109,9 @@ summary::-webkit-details-marker {
 
 <div id="list"></div>
 
+
+
+  
 <script>
 let recipes = JSON.parse(localStorage.getItem("recipes")||"[]");
   let editingIndex = null;
@@ -151,7 +155,7 @@ function render(){
       <details class="recipe">
         <summary class="title">${r.title}</summary>
 
-        <div class="recipeBody">
+        <div class="recipe">
           材料:<br>${r.ingredients}<br><br>
           手順:<br>${r.steps}<br><br>
                <div class="buttonRow">
@@ -273,6 +277,7 @@ function editRecipe(index){
 
 </body>
 </html>
+
 
 
 
