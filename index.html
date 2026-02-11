@@ -88,21 +88,29 @@ function addRecipe(){
 function render(){
   const list=document.getElementById("list");
   list.innerHTML="";
-  recipes.forEach((r,i)=>{
-    const div=document.createElement("div");
-    div.className="card";
-    div.innerHTML=
-      "<b>"+r.title+"</b><br>"+
-      "材料:<br>"+r.ingredients+"<br><br>"+
-      "手順:<br>"+r.steps;
-    list.appendChild(div);
-  });
+  recipes.forEach((r, index) => {
+  list.innerHTML += `
+    <div class="recipe">
+      <h3>${r.name}</h3>
+      材料:<br>${r.ingredients}<br><br>
+      手順:<br>${r.steps}<br><br>
+      <button onclick="deleteRecipe(${index})">削除</button>
+    </div>
+  `;
+});
 }
 
 render();
+  function deleteRecipe(i){
+  recipes.splice(i,1);
+  localStorage.setItem("recipes", JSON.stringify(recipes));
+  location.reload();
+}
+
 </script>
 
 </body>
 </html>
+
 
 
