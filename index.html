@@ -91,7 +91,7 @@ function render(){
   recipes.forEach((r, index) => {
   list.innerHTML += `
     <div class="recipe">
-      <h3>${r.name}</h3>
+      <h3>${r.title}</h3>
       材料:<br>${r.ingredients}<br><br>
       手順:<br>${r.steps}<br><br>
       <button onclick="deleteRecipe(${index})">削除</button>
@@ -111,6 +111,7 @@ render();
 
 </body>
 </html>
+
 
 
 
