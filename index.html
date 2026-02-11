@@ -77,6 +77,9 @@ summary::-webkit-details-marker {
   <textarea id="ingredients" placeholder="材料"></textarea>
   <textarea id="steps" placeholder="手順"></textarea>
   <button onclick="addRecipe()">保存</button>
+  
+  <button onclick="exportRecipes()">テキスト書き出し</button>
+  
 </div>
 
 <div id="list"></div>
@@ -137,11 +140,40 @@ function toggleForm(){
     form.style.display = "none";
   }
 }
+  
+function exportRecipes(){
 
+  if(recipes.length === 0){
+    alert("レシピがないよ");
+    return;
+  }
+
+  let text = "";
+
+  recipes.forEach((r, i) => {
+    text += `■ ${r.title}\n`;
+    text += `材料:\n${r.ingredients}\n\n`;
+    text += `手順:\n${r.steps}\n`;
+    text += `----------------------\n\n`;
+  });
+
+  const blob = new Blob([text], {type:"text/plain"});
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "recipes.txt";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+  
 </script>
 
 </body>
 </html>
+
 
 
 
