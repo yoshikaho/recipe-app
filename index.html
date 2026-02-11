@@ -103,22 +103,25 @@ function showForm(){
 }
 
 function addRecipe(){
+
   const r={
     title:document.getElementById("title").value,
     ingredients:document.getElementById("ingredients").value,
     steps:document.getElementById("steps").value
   };
-  recipes.push(r);
+
+  // ⭐ 編集中かどうかで分岐
+  if(editingIndex !== null){
+    recipes[editingIndex] = r;   // 上書き
+    editingIndex = null;
+  }else{
+    recipes.push(r);             // 新規追加
+  }
+
   save();
   render();
-  if(editingIndex !== null){
-  recipes[editingIndex] = newRecipe;
-  editingIndex = null;
-}else{
-  recipes.push(newRecipe);
 }
 
-}
 
 function render(){
   const list = document.getElementById("list");
@@ -250,6 +253,7 @@ function editRecipe(index){
 
 </body>
 </html>
+
 
 
 
