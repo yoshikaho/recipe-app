@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube API テスト</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>YouTube API テスト</h1>
+    <input type="text" id="videoUrl" placeholder="YouTube動画のURLを貼り付けてね">
+    <button onclick="getVideoInfo()">情報取得</button>
+    <div id="result"></div>
+
+    <script>
+        const API_KEY = 'AIzaSyCNOHvaz0HS2c-kq7hDjmu4LEkZOn7EVuI';
+
+        function getVideoInfo() {
+            const url = document.getElementById('videoUrl').value;
+            const videoId = extractVideoId(url);
+            
+            if (!videoId) {
+                document.getElementById('result').innerHTML = 'URLが正しくないみたい...';
+                return;
+            }
+
+            fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoId}&key=${API_KEY}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.items && data.items.length > 0) {
+                        const video = data.items[0];
+                        const title = video.snippet.title;
+                        const duration = video.contentDetails.duration;
+                        const publishedAt = video.snippet.publishedAt;
+                        
+                        document.getElementById('result').innerHTML = `
+                            <h3>タイトル:</h3>
+                            <p>${title}</p>
+                            <h3>動画時間:</h3>
+                            <p>${duration}</p>
+                            <h3>公開日時:</h3>
+                            <p>${publishedAt}</p>
+                        `;
+                    } else {
+                        document.getElementById('result').innerHTML = '動画が見つからなかった...';
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('result').innerHTML = 'エラーが起きちゃった: ' + error;
+                });
+        }
+
+        function extractVideoId(url) {
+            const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+            const match = url.match(regex);
+            return match ? match[1] : null;
+        }
+    </script>
+</body>
+</html>
